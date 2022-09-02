@@ -1,11 +1,9 @@
 package com.UdeA.Ciclo3.modelos;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="Empleado")
 public class Empleado {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -14,17 +12,19 @@ public class Empleado {
     private int id;
     private String nombre;
     private String correo;
-    private String empresaPertenece;
-    private String rolEmpleado;
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
+    private Empresa empresa;
 
+    private String rolEmpleado;
 
     public Empleado() {
     }
 
-    public Empleado(String nombre, String correo, String empresaPertenece, String rolEmpleado) {
+    public Empleado(String nombre, String correo, Empresa empresa, String rolEmpleado) {
         this.nombre = nombre;
         this.correo = correo;
-        this.empresaPertenece = empresaPertenece;
+        this.empresa = empresa;
         this.rolEmpleado = rolEmpleado;
     }
 
@@ -52,14 +52,6 @@ public class Empleado {
         this.correo = correo;
     }
 
-    public String getEmpresaPertenece() {
-        return empresaPertenece;
-    }
-
-    public void setEmpresaPertenece(String empresaPertenece) {
-        this.empresaPertenece = empresaPertenece;
-    }
-
     public String getRolEmpleado() {
         return rolEmpleado;
     }
@@ -67,4 +59,14 @@ public class Empleado {
     public void setRolEmpleado(String rolEmpleado) {
         this.rolEmpleado = rolEmpleado;
     }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+
 }
